@@ -1,45 +1,40 @@
-import { Button } from "bootstrap";
 import React, { useState, useEffect } from "react";
 import preguntas from "./Filtrado";
 import "./Questions.css";
 
 const Questions = () => {
   const [question, setQuestion] = useState(0);
+  const [timeOut, setTimeOut] = useState(10);
+  const [areDisabled, setAreDisabled] = useState(false);
   const [points, setPoints] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
-  const [timeout, setTimeout] = useState(10);
-  const [areDisabled, setAreDisabled] = useState(false);
 
-  function handleAnswerSubmit(boolean, e) {
+  function AnswerSubmit(boolean) {
     if (boolean) setPoints(points + 1);
-    e.target.classList.add(boolean ? "correct" : "incorrect");
- 
-
     setTimeout(() => {
       if (question === preguntas.length - 1) {
         setIsFinished(true);
       } else {
         setQuestion(question + 1);
-        setTimeout(10);
+        setTimeOut(10);
       }
-    }, 1000); }
+    }, 500);
+  }
 
   useEffect(() => {
     const intervalo = setInterval(() => {
-      if (timeout > 0) setTimeout((prev) => prev - 1);
-      if (timeout === 0) setAreDisabled(true);
+      if (timeOut > 0) setTimeOut((previous) => previous - 1);
+      if (timeOut === 0) setAreDisabled(true);
     }, 1000);
-
     return () => clearInterval(intervalo);
-  }, [timeout]);
+  }, [timeOut]);
 
   if (isFinished)
     return (
       <main className="box">
-        <div className="juego-terminado">
+        <div className="finalized">
           <span>
-            {" "}
-            Result {points} of {preguntas.length}{" "}
+            Result {points} of {preguntas.length}
           </span>
           <button onClick={() => (window.location.href = "/")}>
             {" "}
@@ -48,43 +43,52 @@ const Questions = () => {
         </div>
       </main>
     );
+
   return (
     <main className="box">
       <div className="lef">
+        <div className="title-questions">{preguntas[question].question}</div>
+
         <div className="questions">
           <span>Questions {question + 1} of</span> {preguntas.length}
         </div>
-        <div className="titulo-pregunta"> {preguntas.question} </div>
-      </div>
-      <div>
-        {" "}
-        {!areDisabled ? (
-          <span className="time-out">Time:{timeout} </span>
-        ) : (
-          <button
-            onClick={() => {
-              setTimeout(10);
-              setAreDisabled(false);
-              setQuestion(question + 1);
-            }} >
-            Continue
-          </button>
-        )}
+
+        <div>
+          {" "}
+          {!areDisabled ? (
+            <span className="time-out">Time:{timeOut} </span>
+          ) : (
+            <button
+              onClick={() => {
+                setTimeOut(10);
+                setAreDisabled(false);
+                if (question === preguntas.length - 1) {
+                  setIsFinished(true);
+                } else {
+                  setQuestion(question + 1);
+                }
+              }}
+            >
+              Continue
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="right">
         {preguntas[question].incorrectAnswers.map((answer) => (
           <button
             disabled={areDisabled}
-            key={preguntas.incorrectAnswers}
-            onClick={(e) => handleAnswerSubmit(false, e)}>
+            key={answer}
+            onClick={() => AnswerSubmit(false)}
+          >
             {answer}
           </button>
         ))}
         <button
           disabled={areDisabled}
-          key={preguntas.correctAnswer}
-          onClick={(e) => handleAnswerSubmit(true, e)}
+          key={preguntas}
+          onClick={() => AnswerSubmit(true)}
         >
           {preguntas[question].correctAnswer}
         </button>
@@ -92,4 +96,5 @@ const Questions = () => {
     </main>
   );
 };
+
 export default Questions;

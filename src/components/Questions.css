@@ -5,7 +5,7 @@
   body {
     margin: 0;
     color: #fff;
-    background-color: #796161;
+    background-color: #77746b;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +13,7 @@
   }
   
   .box {
-    background-color: #5d7047;
+    background-color: #195c46;
     width: 600px;
     height: 400px;
     min-height: 200px;
@@ -30,19 +30,14 @@
     flex-direction: column;
     justify-content: space-around;
   }
-  
+
   .questions {
     margin-bottom: 20px;
   }
+  .title-questions{
+    font-size: 30px;
   
-  .pregunta-numero span {
-    font-size: 28px;
   }
-  
-  .pregunta-titulo {
-    margin-bottom: 12px;
-  }
-  
   .right {
     width: 100%;
     display: flex;
@@ -50,44 +45,30 @@
     justify-content: space-between;
   }
     
-  /* GRAL */
   button {
     width: 100%;
     font-size: 16px;
     color: #ffffff;
-    background-color: #252d4a;
-    border-radius: 15px;
+    background-color: #060e2b;
+    border-radius: 10px;
     display: flex;
     padding: 5px;
     justify-content: flex-start;
     align-items: center;
-    border: 5px solid #234668;
+    border: 2px solid #2c9929;
     cursor: pointer;
   }
   
   .time-out {
-    font-size: 14px;
+    font-size: 15px;
     color: #fcbf3d;
     margin-bottom: 20px;
   }
-  
-  .correct,
-  .correct:hover {
-    background-color: #2f922f;
-  }
-  
-  .incorrect,
-  .incorrect:hover {
-    background-color: #ff3333;
-  }
-  
-  .btns-container {
-    display: flex;
-    justify-content: space-evenly;
-  }
-  
+    
   button:hover {
-    background-color: #234668;
+    background-color: #19041f;
+    border: 2px solid #dde7dc;
+
   }
   
   button[disabled] {
@@ -103,5 +84,10 @@
   button svg {
     margin-right: 5px;
   }
-
-  
+  .finalized{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 24px;
+    align-items: center;
+  }
